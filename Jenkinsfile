@@ -10,7 +10,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                    url: 'git@github.com:adisharma96/Terraform-S3-Bucket-Manager.git'
+                    url: 'https://github.com/adisharma96/Terraform-S3-Bucket-Manager.git'
             }
         }
 
