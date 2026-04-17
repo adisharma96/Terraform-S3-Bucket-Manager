@@ -1,4 +1,4 @@
 variable "name" {
-    default = "rs07863121991"
+  default = "rs07863121991"
 }
 
