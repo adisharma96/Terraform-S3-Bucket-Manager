@@ -1,16 +1,17 @@
 pipeline {
     agent any
-    
-     environment {
-        AWS_DEFAULT_REGION = 'us-east-1'
-     }
 
-     stages {
+    environment {
+        AWS_DEFAULT_REGION = 'us-east-1'
+    }
+
+    stages {
+
         stage('Checkout') {
             steps {
                 git branch: 'main',
-                    uri: 'git@github.com:adisharma96/Terraform-S3-Bucket-Manager.git'
-             }
+                    url: 'git@github.com:adisharma96/Terraform-S3-Bucket-Manager.git'
+            }
         }
 
         stage('Setup AWS Credentials') {
@@ -19,28 +20,28 @@ pipeline {
                     $class: 'AmazonWebServicesCredentialsBinding',
                     credentialsId: 'aws-creds'
                 ]]) {
-                    sh 'aws sts get-caller-identity' 
+                    sh 'aws sts get-caller-identity'
                 }
-             }
+            }
         }
 
         stage('Terraform Init') {
             steps {
                 dir('terraform') {
                     sh 'terraform init'
-                 }
+                }
             }
         }
-   
-        stage('Terraform Formate and Validate')
+
+        stage('Terraform Format and Validate') {
             steps {
                 dir('terraform') {
-                    sh 'terraform fmt -check' 
+                    sh 'terraform fmt -check'
                     sh 'terraform validate'
-                 }
+                }
             }
         }
-        
+
         stage('Terraform Plan') {
             steps {
                 dir('terraform') {
@@ -51,7 +52,7 @@ pipeline {
 
         stage('Manual Approval') {
             steps {
-               input message: 'Do you want to apply terraform changes?'
+                input message: 'Do you want to apply terraform changes?'
             }
         }
 
@@ -68,7 +69,7 @@ pipeline {
             }
         }
     }
-    
+
     post {
         success {
             echo 'Infrastructure created successfully'
@@ -81,5 +82,3 @@ pipeline {
         }
     }
 }
-   
-                
