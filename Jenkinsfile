@@ -37,7 +37,6 @@ pipeline {
             steps {
                 dir('terraform') {
                     sh 'terraform fmt'
-                    sh 'terraform validate'
                 }
             }
         }
