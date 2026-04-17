@@ -18,7 +18,7 @@ pipeline {
             steps {
                 withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'aws-creds'
+                    credentialsId: 'AWS_CREDENTIALS'
                 ]]) {
                     sh 'aws sts get-caller-identity'
                 }
@@ -60,7 +60,7 @@ pipeline {
             steps {
                 withCredentials([[
                     $class: 'AmazonWebServicesCredentialsBinding',
-                    credentialsId: 'aws-creds'
+                    credentialsId: 'AWS_CREDENTIALS'
                 ]]) {
                     dir('terraform') {
                         sh 'terraform apply -auto-approve tfplan'
